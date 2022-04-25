@@ -10,7 +10,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const db_1 = require("./db");
 const sql = sqlite3_1.default.verbose();
 const app = (0, express_1.default)();
-const port = 3000;
+const port = 8080;
 const dbs = new sql.Database('liteDb.db');
 db_1.db.init().then(() => {
     app.post('/', (req, res) => {
@@ -25,6 +25,7 @@ db_1.db.init().then(() => {
         updatePlot(r);
         res.send('ok');
     });
+    app.get('', (req, res) => res.send('ok'));
     app.get('/clean', (req, res) => {
         clean();
         res.send('cleaned');

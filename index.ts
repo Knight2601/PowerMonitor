@@ -7,7 +7,7 @@ import {db, Message} from './db';
 const sql = sqlite3.verbose();
 
 const app = express()
-const port = 3000
+const port = 8080
 
 const dbs = new sql.Database('liteDb.db');
 

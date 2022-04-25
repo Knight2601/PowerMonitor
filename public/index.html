@@ -195,7 +195,8 @@
             ];
             var freq = document.getElementById("frequency");
             var current = 0;
-            var myRequest = new Request(`http://localhost:3000/get?f=${freq.value || 1}&timerange=${timerange}`);
+            
+            var myRequest = new Request(`http://localhost:8080/get?f=${freq.value || 1}&timerange=${timerange}`);
             return new Promise((res, rej) => {
                 fetch(myRequest).then(response => response.json())
                     .then(data => {
