@@ -26,6 +26,7 @@ db.init().then(() => {
     res.send('ok');
   })
 
+  app.get('', (req, res) => res.send('ok'));
 
   app.get('/clean', (req, res) => {
     clean();
