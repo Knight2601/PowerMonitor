@@ -46,16 +46,22 @@ class db {
     }
     static query(querystring) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`Querying container: ${config_1.config.containerId}`);
-            const querySpec = {
-                query: querystring
-            };
-            // read all items in the Items container
-            const { resources: items } = yield this.container.items
-                .query(querySpec)
-                .fetchAll();
-            console.log(items.length);
-            return items;
+            try {
+                console.log(`Querying container: ${config_1.config.containerId}`);
+                const querySpec = {
+                    query: querystring
+                };
+                // read all items in the Items container
+                const { resources: items } = yield this.container.items
+                    .query(querySpec)
+                    .fetchAll();
+                console.log(items.length);
+                return items;
+            }
+            catch (e) {
+                console.log(e);
+                return null;
+            }
         });
     }
     static insert(item) {

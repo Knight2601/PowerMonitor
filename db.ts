@@ -38,7 +38,7 @@ export class db {
         console.log(`Created container:\n${container.id}\n`);
 
     }
-    
+
     static async init() {
         this.client = new CosmosClient(`AccountEndpoint=${config.endpoint}/;AccountKey=${config.key};`);
 
@@ -50,20 +50,27 @@ export class db {
     }
 
     static async query(querystring: string) {
-        console.log(`Querying container: ${config.containerId}`);
+        try {
 
-        const querySpec = {
-            query: querystring
-        };
+            console.log(`Querying container: ${config.containerId}`);
 
-        // read all items in the Items container
-        const { resources: items } = await this.container.items
-            .query(querySpec)
-            .fetchAll();
+            const querySpec = {
+                query: querystring
+            };
 
-        console.log(items.length);
-        return items;
+            // read all items in the Items container
+            const { resources: items } = await this.container.items
+                .query(querySpec)
+                .fetchAll();
+
+            console.log(items.length);
+            return items;
+        } catch (e) {
+            console.log(e);
+            return null;
+        }
     }
+
 
     static async insert(item: Message) {
         const { resource: createdItem } = await this.container.items.create(item);
