@@ -94,7 +94,7 @@ function getData(freq: string, timerange: string) {
   return new Promise((resolve, reject) => {
     const f = parseInt(freq);
     let p = timerange;
-    const limit = 100;
+    let limit = 100;
     switch (timerange) {
       case 'hour':
         p = dayjs().add(-1, 'hour').format();
@@ -119,21 +119,25 @@ function getData(freq: string, timerange: string) {
     }
     let select = `SELECT c.val0, c.val1, c.val2, c.val3, c.asat FROM c where c.asat > '${p}'  order by c.asat desc offset 0 LIMIT ${limit} `;
     if (f >= 86400) {
+      limit = 100;
       select = `SELECT avg(c.val0) as val0, avg(c.val1) as val1, avg(c.val2) as val2, avg(c.val3) as val3, 
       left(c.asat, 10)  as asat FROM c  where c.asat > '${p}'  GROUP BY left(c.asat, 10) 
-      order by left(c.asat, 10)  desc offset 0   LIMIT  ${limit};`;
+      order by left(c.asat, 10)  desc offset 0   LIMIT  ${limit}`;
     } else if (f >= 3600) {
+      limit = 100;
       select = `SELECT  avg(c.val0) as val0, avg(c.val1) as val1, avg(c.val2) as val2, avg(c.val3) as val3, 
       left(c.asat, 13) as asat FROM c  where c.asat > '${p}' GROUP BY left(c.asat, 13) 
-      order by left(c.asat, 13) desc  offset 0  LIMIT  ${limit};`;
+      order by left(c.asat, 13) desc  offset 0  LIMIT  ${limit}`;
     } else if (f >= 60) {
+      limit = 100;
       select = `SELECT avg(c.val0) as val0, avg(c.val1) as val1, avg(c.val2) as val2, avg(c.val3) as val3, 
       left(c.asat, 16) as asat FROM c where c.asat > '${p}'  GROUP BY left(c.asat, 16) 
-      order by left(c.asat, 16) desc  offset 0  LIMIT  ${limit};`;
+      order by left(c.asat, 16) desc  offset 0  LIMIT  ${limit}`;
     } else if (f > 1) {
+      limit=60;
       select = `SELECT avg(c.val0) as val0, avg(c.val1) as val1, avg(c.val2) as val2, avg(c.val3) as val3, 
       left(c.asat, 19) as asat FROM c  where c.asat > '${p}' GROUP BY left(c.asat, 19) 
-      order by left(c.asat, 19) desc  offset 0  LIMIT  ${limit};`;
+      order by left(c.asat, 19) desc  offset 0  LIMIT  ${limit}`;
     }
 // 2022-04-25T15:33:34
     console.log(select);

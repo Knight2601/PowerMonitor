@@ -74,6 +74,13 @@
             /* opacity: 1; */
             display: block;
         }
+        .clocker {
+            position:absolute;
+            top:0;
+            left: 40%;
+            width: 20%;
+            font-size: 12px;
+        }
     </style>
 </head>
 
@@ -83,6 +90,7 @@
             <div style="display: inline-block; font-weight: bold;">
                 Power Usage Monitor
             </div>
+            <div id="clocker" class="clocker"></div>
             <div style="display: inline-block; float: right;">
                 <select id="frequency" title="Select reporting interval" onchange="get()">
                     <option value="1" selected>1s</option>
@@ -151,6 +159,11 @@
 
         var charts = [{}, {}, {}, {}, {}];
 
+        function updateClocker() {
+            var c = document.getElementById("clocker");
+            clocker.innerText = new Date();
+        }
+
         function expando(n) {
             var ele = document.getElementById("expandoContainer");
             ele.classList = "expanded show";
@@ -196,7 +209,7 @@
             var freq = document.getElementById("frequency");
             var current = 0;
             
-            var myRequest = new Request(`http://localhost:8080/get?f=${freq.value || 1}&timerange=${timerange}`);
+            var myRequest = new Request(`//powermon.azurewebsites.net/get?f=${freq.value || 1}&timerange=${timerange}`);
             return new Promise((res, rej) => {
                 fetch(myRequest).then(response => response.json())
                     .then(data => {
@@ -406,6 +419,7 @@
         }
         get();
         setInterval(get, 2000);
+        setInterval(updateClocker, 1000);
     </script>
 </body>
 

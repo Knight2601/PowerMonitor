@@ -2,5 +2,7 @@
     "appService.zipIgnorePattern": [
         "node_modules{,/**}",
         ".vscode{,/**}"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/f039e55d-85ca-42cf-b119-313a709d2413/resourceGroups/PowerMon-Knight/providers/Microsoft.Web/sites/powermon",
+    "appService.deploySubpath": "."
 }

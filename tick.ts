@@ -29,8 +29,8 @@ for (let i = 0; i< 10000; i++) {
 
 function postData(post_data) {
     const post_options = {
-        host: 'localhost',
-        port: '3000',
+        host: 'powermon.azurewebsites.net',
+        port: '80',
         path: '/',
         method: 'POST',
         headers: {
@@ -45,6 +45,9 @@ function postData(post_data) {
         res.on('data', function (chunk) {
             console.log('Response: ' + chunk);
         });
+        res.on('error', (e) => {
+          console.log(e);
+        })
     });
   
     // post the data
